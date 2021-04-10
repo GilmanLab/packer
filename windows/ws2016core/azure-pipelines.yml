@@ -4,16 +4,16 @@ trigger:
       - master
   paths:
     include:
-      - packer/windows/*
+      - windows/*
     exclude:
-      - packer/windows/ws2016gui/*
+      - windows/ws2016gui/*
 
 jobs:
 - job: Default
   timeoutInMinutes: 120
   pool:
-    name: default
+    name: Lab
   steps:
   - script: powershell ./build.ps1 -Username administrator@vsphere.local -Password $(vsphere.password) -Image ws2016core
-    workingDirectory: $(Build.SourcesDirectory)/packer/windows
+    workingDirectory: $(Build.SourcesDirectory)/windows
     displayName: 'Build Windows Server 2016 Core packer image'
