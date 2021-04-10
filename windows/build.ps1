@@ -9,4 +9,4 @@ param(
     -var "vsphere_username=$Username" `
     -var "vsphere_password=$Password" `
     -var-file "$Image/config.pkrvars.hcl" `
-    windows.pkr.hcl
+    iso.pkr.hcl
