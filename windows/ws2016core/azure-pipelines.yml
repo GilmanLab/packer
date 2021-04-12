@@ -4,9 +4,13 @@ trigger:
       - master
   paths:
     include:
-      - windows/*
-    exclude:
-      - windows/ws2016gui/*
+      - windows/build.ps1
+      - windows/iso.pkr.hcl
+      - windows/ws2016core/*
+      - windows/scripts/enable-rdp.ps1
+      - windows/scripts/enable-winrm.ps1
+      - windows/scripts/install-vm-tools.ps1
+      - windows/scripts/undo-winrmconfig.ps1
 
 jobs:
 - job: Default

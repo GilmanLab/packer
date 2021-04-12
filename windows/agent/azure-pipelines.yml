@@ -1,0 +1,20 @@
+trigger:
+  branches:
+    include:
+      - master
+  paths:
+    include:
+      - windows/build.ps1
+      - windows/clone.pkr.hcl
+      - windows/agent/*
+      - windows/scripts/enable-winrm.ps1
+
+jobs:
+- job: Default
+  timeoutInMinutes: 120
+  pool:
+    name: Lab
+  steps:
+  - script: powershell ./build.ps1 -Type clone -Username administrator@vsphere.local -Password $(vsphere.password) -Image agent
+    workingDirectory: $(Build.SourcesDirectory)/windows
+    displayName: 'Build Azure DevOps Windows agent'
