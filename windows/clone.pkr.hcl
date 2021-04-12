@@ -72,6 +72,7 @@ source "vsphere-clone" "agent_base" {
   network = var.vsphere_vm.network
   CPUs    = var.vsphere_vm.cpus
   RAM     = var.vsphere_vm.memory
+  convert_to_template = true
 
   customize {
       windows_sysprep_file = var.vsphere_media.sysprep
