@@ -7,6 +7,7 @@ trigger:
       - windows/build.ps1
       - windows/iso.pkr.hcl
       - windows/ws2016gui/*
+      - windows/scripts/change_pass.ps1
       - windows/scripts/enable-rdp.ps1
       - windows/scripts/enable-winrm.ps1
       - windows/scripts/install-vm-tools.ps1
@@ -17,6 +18,8 @@ jobs:
   timeoutInMinutes: 120
   pool:
     name: Lab
+  variables:
+    - group: packer
   steps:
   - script: powershell ./build.ps1 -Type iso -Username administrator@vsphere.local -Password $(vsphere.password) -Image ws2016gui
     workingDirectory: $(Build.SourcesDirectory)/windows
