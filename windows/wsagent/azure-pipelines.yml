@@ -6,15 +6,19 @@ trigger:
     include:
       - windows/build.ps1
       - windows/clone.pkr.hcl
-      - windows/agent/*
+      - windows/wsagent/*
+      - windows/scripts/change-pass.ps1
       - windows/scripts/enable-winrm.ps1
+      - windows/scripts/undo-winrmconfig.ps1
 
 jobs:
 - job: Default
   timeoutInMinutes: 120
   pool:
     name: Lab
+    demands:
+      - agent.os -equals Linux
   steps:
-  - script: powershell ./build.ps1 -Type clone -Username administrator@vsphere.local -Password $(vsphere.password) -Image wsagent
+  - script: pwsh ./build.ps1 -Type clone -Username administrator@vsphere.local -VspherePassword $(vsphere.password) -AdminPassword $(admin.password) -Image wsagent
     workingDirectory: $(Build.SourcesDirectory)/windows
     displayName: 'Build Azure DevOps Windows agent'

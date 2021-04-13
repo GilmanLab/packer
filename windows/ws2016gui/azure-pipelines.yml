@@ -21,6 +21,6 @@ jobs:
   variables:
     - group: packer
   steps:
-  - script: powershell ./build.ps1 -Type iso -Username administrator@vsphere.local -Password $(vsphere.password) -Image ws2016gui
+  - script: pwsh ./build.ps1 -Type iso -Username administrator@vsphere.local -VspherePassword $(vsphere.password) -AdminPassword $(admin.password) -Image ws2016gui
     workingDirectory: $(Build.SourcesDirectory)/windows
     displayName: 'Build Windows Server 2016 GUI packer image'
