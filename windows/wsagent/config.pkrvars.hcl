@@ -10,7 +10,7 @@ vsphere_vcenter = {
 }
 
 vsphere_vm = {
-    name = "Agent"
+    name = "WSAgent"
     template = "WS2016Core"
     cpus = 4
     memory = 8192

@@ -15,6 +15,6 @@ jobs:
   pool:
     name: Lab
   steps:
-  - script: powershell ./build.ps1 -Type clone -Username administrator@vsphere.local -Password $(vsphere.password) -Image agent
+  - script: powershell ./build.ps1 -Type clone -Username administrator@vsphere.local -Password $(vsphere.password) -Image wsagent
     workingDirectory: $(Build.SourcesDirectory)/windows
     displayName: 'Build Azure DevOps Windows agent'
