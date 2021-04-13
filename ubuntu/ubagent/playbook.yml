@@ -1,0 +1,46 @@
+---
+- name: Agent playbook
+  hosts: all
+  become: yes
+  tasks:
+    - name: Set hostname
+      ansible.builtin.hostname:
+        name: ubagent.gilman.io
+    - name: Add Hashicorp signing key
+      ansible.builtin.apt_key:
+        url: https://apt.releases.hashicorp.com/gpg
+        state: present
+    - name: Add Hashicorp repository
+      ansible.builtin.apt_repository:
+        repo: deb [arch=amd64] https://apt.releases.hashicorp.com focal main
+        state: present
+    - name: Install required packages
+      ansible.builtin.apt:
+        update_cache: yes
+        name:
+          - python3
+          - python3-pip
+          - packer
+          - terraform
+    - name: Install ansible
+      ansible.builtin.pip:
+        name: ansible
+    - name: Install chocolatey collection
+      ansible.builtin.command: ansible-galaxy collection install chocolatey.chocolatey
+    - name: Make Azure DevOps agent directory
+      ansible.builtin.file:
+        path: /opt/agent
+        state: directory
+    - name: Download Azure DevOps agent files
+      ansible.builtin.get_url:
+        url: https://vstsagentpackage.azureedge.net/agent/2.184.2/vsts-agent-linux-x64-2.184.2.tar.gz
+        dest: /tmp/agent.tar.gz
+    - name: Extract Azure DevOps agent files into agent directory
+      ansible.builtin.unarchive:
+        src: /tmp/agent.tar.gz
+        dest: /opt/agent
+        remote_src: yes
+    - name: Remove netplan config
+      ansible.builtin.file:
+        path: /etc/netplan/50-cloud-init.yaml
+        state: absent
