@@ -138,6 +138,6 @@ build {
     environment_vars = [
         "ADMIN_PASSWORD=${var.admin_password}"
     ]
-    script = "scripts/change_pass.ps1"
+    script = "scripts/change-pass.ps1"
   }
 }
