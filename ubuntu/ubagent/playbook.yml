@@ -27,6 +27,10 @@
         name: ansible
     - name: Install chocolatey collection
       ansible.builtin.command: ansible-galaxy collection install chocolatey.chocolatey
+    - name: Install Ansible Windows collection
+      ansible.builtin.command: ansible-galaxy collection install ansible.windows
+    - name: Install community Windows collection
+      ansible.builtin.command: ansible-galaxy collection install community.windows
     - name: Make Azure DevOps agent directory
       ansible.builtin.file:
         path: /opt/agent

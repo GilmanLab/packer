@@ -1,0 +1,11 @@
+& 'C:\agent\config.cmd' `
+    --unattended `
+    --url 'https://dev.azure.com/GilmanLab' `
+    --auth pat `
+    --token $env:TOKEN `
+    --pool Lab `
+    --agent WSAgent01 `
+    --runAsService `
+    --windowsLogonAccount Administrator `
+    --windowsLogonPassword $env:ADMIN_PASSWORD `
+    --replace

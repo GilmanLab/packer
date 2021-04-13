@@ -1,0 +1,25 @@
+---
+- name: Agent playbook
+  hosts: all
+  tasks:
+    - name: Install required packages
+      chocolatey.chocolatey.win_chocolatey:
+        name: 
+          - packer
+          - terraform
+          - git
+          - python
+          - powershell-core
+        state: present
+    - name: Make Azure DevOps agent directory
+      ansible.windows.win_file:
+        path: C:\agent
+        state: directory
+    - name: Download Azure DevOps agent files
+      ansible.windows.win_get_url:
+        url: https://vstsagentpackage.azureedge.net/agent/2.185.0/vsts-agent-win-x64-2.185.0.zip
+        dest: C:\Users\Administrator\agent.zip
+    - name: Extract Azure DevOps agent files into agent directory
+      community.windows.win_unzip:
+        src: C:\Users\Administrator\agent.zip
+        dest: C:\agent

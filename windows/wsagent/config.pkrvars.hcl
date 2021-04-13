@@ -1,3 +1,5 @@
+ansible_playbook = "wsagent/playbook.yml"
+
 vsphere_server = {
     address = "vcenter.gilman.io"
     insecure = true
@@ -27,7 +29,7 @@ vsphere_media = {
     floppy_files = [
         "scripts/enable-winrm.ps1"
     ]
-    sysprep = "agent/sysprep.xml"
+    sysprep = "wsagent/sysprep.xml"
 }
 
 winrm = {
