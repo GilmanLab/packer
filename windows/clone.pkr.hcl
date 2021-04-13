@@ -14,6 +14,15 @@ variable "vsphere_server" {
     })
 }
 
+variable "admin_password" {
+    type = string
+    sensitive = true
+}
+
+variable "ansible_playbook" {
+    type = string
+}
+
 variable "vsphere_vcenter" {
     type = object({
         datacenter = string
@@ -93,4 +102,23 @@ source "vsphere-clone" "agent_base" {
 
 build {
   sources = ["source.vsphere-clone.agent_base"]
+
+  provisioner "ansible" {
+      playbook_file = var.ansible_playbook
+      user = "Administrator"
+      use_proxy = false
+  }
+  provisioner "powershell" {
+    elevated_user = "Administrator"
+    elevated_password = "GlabT3mp!"
+    script = "scripts/undo-winrmconfig.ps1"
+  }
+  provisioner "powershell" {
+    elevated_user = "Administrator"
+    elevated_password = "GlabT3mp!"
+    environment_vars = [
+        "ADMIN_PASSWORD=${var.admin_password}"
+    ]
+    script = "scripts/change-pass.ps1"
+  }
 }

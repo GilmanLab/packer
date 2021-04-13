@@ -27,6 +27,21 @@
         name: ansible
     - name: Install chocolatey collection
       ansible.builtin.command: ansible-galaxy collection install chocolatey.chocolatey
+    - name: Install Ansible Windows collection
+      ansible.builtin.command: ansible-galaxy collection install ansible.windows
+    - name: Install community Windows collection
+      ansible.builtin.command: ansible-galaxy collection install community.windows
+    - name: Download Packer Windows Update plugin
+      ansible.builtin.get_url:
+        url: https://github.com/rgl/packer-provisioner-windows-update/releases/download/v0.11.0/packer-provisioner-windows-update_0.11.0_linux_amd64.tar.gz
+        dest: /tmp/pwu.tar.gz
+    - name: Extract Packer Windows Update plugin
+      ansible.builtin.unarchive:
+        src: /tmp/pwu.tar.gz
+        dest: /tmp
+        remote_src: yes
+    - name: Install Packer Windows Update plugin
+      ansible.builtin.command: cp /tmp/packer-provisioner-windows-update /usr/bin/packer-provisioner-windows-update
     - name: Make Azure DevOps agent directory
       ansible.builtin.file:
         path: /opt/agent

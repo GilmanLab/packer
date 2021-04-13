@@ -1,3 +1,5 @@
+ansible_playbook = "wsagent/playbook.yml"
+
 vsphere_server = {
     address = "vcenter.gilman.io"
     insecure = true
@@ -10,7 +12,7 @@ vsphere_vcenter = {
 }
 
 vsphere_vm = {
-    name = "Agent"
+    name = "WSAgent"
     template = "WS2016Core"
     cpus = 4
     memory = 8192
@@ -27,7 +29,7 @@ vsphere_media = {
     floppy_files = [
         "scripts/enable-winrm.ps1"
     ]
-    sysprep = "agent/sysprep.xml"
+    sysprep = "wsagent/sysprep.xml"
 }
 
 winrm = {
