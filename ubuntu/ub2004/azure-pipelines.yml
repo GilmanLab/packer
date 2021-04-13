@@ -1,0 +1,21 @@
+trigger:
+  branches:
+    include:
+      - master
+  paths:
+    include:
+      - ubuntu/build.ps1
+      - ubuntu/iso.pkr.hcl
+      - ubuntu/ub2004/*
+      - ubuntu/scripts/bootstrap.sh
+      - ubuntu/scripts/install-ad.sh
+
+jobs:
+- job: Default
+  timeoutInMinutes: 120
+  pool:
+    name: Lab
+  steps:
+  - script: pwsh ./build.ps1 -Type iso -Username administrator@vsphere.local -VspherePassword $(vsphere.password) -AdminPassword $(admin.password) -Image ub2004
+    workingDirectory: $(Build.SourcesDirectory)/ubuntu
+    displayName: 'Build Ubuntu 20.04 packer image'
