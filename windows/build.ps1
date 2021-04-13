@@ -1,7 +1,8 @@
 param(
     [string] $Type,
     [string] $Username,
-    [string] $Password,
+    [string] $VspherePassword,
+    [string] $AdminPassword,
     [string] $Image
 )
 
@@ -10,7 +11,8 @@ switch ($Type) {
         & packer build `
             -force `
             -var "vsphere_username=$Username" `
-            -var "vsphere_password=$Password" `
+            -var "vsphere_password=$VspherePassword" `
+            -var "admin_password=$AdminPassword" `
             -var-file "$Image/config.pkrvars.hcl" `
             iso.pkr.hcl
     }
@@ -18,7 +20,8 @@ switch ($Type) {
         & packer build `
             -force `
             -var "vsphere_username=$Username" `
-            -var "vsphere_password=$Password" `
+            -var "vsphere_password=$VspherePassword" `
+            -var "admin_password=$AdminPassword" `
             -var-file "$Image/config.pkrvars.hcl" `
             clone.pkr.hcl
     }

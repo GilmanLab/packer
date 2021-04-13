@@ -7,6 +7,11 @@ variable "vsphere_password" {
     sensitive = true
 }
 
+variable "admin_password" {
+    type = string
+    sensitive = true
+}
+
 variable "vsphere_server" {
     type = object({
         address = string
@@ -126,5 +131,13 @@ build {
     elevated_user = "Administrator"
     elevated_password = "GlabT3mp!"
     script = "scripts/undo-winrmconfig.ps1"
+  }
+  provisioner "powershell" {
+    elevated_user = "Administrator"
+    elevated_password = "GlabT3mp!"
+    environment_vars = [
+        "ADMIN_PASSWORD=${var.admin_password}"
+    ]
+    script = "scripts/change_pass.ps1"
   }
 }
