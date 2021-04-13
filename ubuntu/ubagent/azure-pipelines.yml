@@ -15,6 +15,8 @@ jobs:
     name: Lab
     demands:
       - agent.os -equals Linux
+  variables:
+    - group: packer
   steps:
   - script: pwsh ./build.ps1 -Type clone -Username administrator@vsphere.local -VspherePassword $(vsphere.password) -AdminPassword $(admin.password) -Image ubagent
     workingDirectory: $(Build.SourcesDirectory)/ubuntu
