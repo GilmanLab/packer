@@ -18,10 +18,19 @@ jobs:
     name: Lab
     demands:
       - agent.os -equals Linux
-  variables:
-    - group: packer
-    - group: vcenter
   steps:
+  - task: AzureAppConfiguration@3
+    inputs:
+      azureSubscription: 'Lab Resource Group'
+      ConfigstoreName: 'LabConfig'
+      KeyFilter: '*'
+      Label: 'vcenter'
+  - task: AzureAppConfiguration@3
+    inputs:
+      azureSubscription: 'Lab Resource Group'
+      ConfigstoreName: 'LabConfig'
+      KeyFilter: '*'
+      Label: 'packer'
   - script: pwsh ./build.ps1 -Type clone -Image wsagent
     workingDirectory: $(Build.SourcesDirectory)/windows
     displayName: 'Build Azure DevOps Windows agent'
