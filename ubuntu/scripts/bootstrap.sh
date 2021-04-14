@@ -16,6 +16,7 @@ rm -rf /etc/cloud/cloud.cfg.d/99-installer.cfg
 rm -rf /var/lib/cloud/seed/nocloud
 rm -rf /var/lib/cloud/seed/nocloud-net
 echo 'disable_vmware_customization: false' >> /etc/cloud/cloud.cfg
+echo 'datasource_list: [ "DataSourceOVF" ]' > /etc/cloud/cloud.cfg.d/99-DataSourceOVF.cfg
 
 # Install powershell
 apt-get install -y wget apt-transport-https software-properties-common
