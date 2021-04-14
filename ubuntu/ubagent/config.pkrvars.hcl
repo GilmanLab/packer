@@ -13,6 +13,8 @@ vsphere_vcenter = {
 
 vsphere_vm = {
     name = "UBAgent"
+    hostname = "ubtest"
+    domain = "gilman.io"
     template = "UB2004"
     cpus = 4
     memory = 8192

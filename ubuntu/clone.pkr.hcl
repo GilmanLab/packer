@@ -34,6 +34,8 @@ variable "vsphere_vcenter" {
 variable "vsphere_vm" {
     type = object({
         name = string
+        hostname = string
+        domain = string
         template = string
         cpus = number
         memory = number
@@ -65,6 +67,16 @@ source "vsphere-clone" "clone_base" {
   CPUs    = var.vsphere_vm.cpus
   RAM     = var.vsphere_vm.memory
   convert_to_template = true
+
+  customize {
+      linux_options {
+          host_name = var.vsphere_vm.hostname
+          domain = var.vsphere_vm.domain
+      }
+      network_interface {
+
+      }
+  }
 
   disk_controller_type = ["pvscsi"]
   dynamic "storage" {

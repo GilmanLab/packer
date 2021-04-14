@@ -3,9 +3,9 @@
   hosts: all
   become: yes
   tasks:
-    - name: Set hostname
+    - name: Set hostname to FQDN for Windows AD compatibility
       ansible.builtin.hostname:
-        name: ubagent.gilman.io
+        name: "{{ ansible_hostname }}.{{ ansible_domain }}"
     - name: Add Hashicorp signing key
       ansible.builtin.apt_key:
         url: https://apt.releases.hashicorp.com/gpg
