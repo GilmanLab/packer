@@ -23,6 +23,6 @@ jobs:
     workingDirectory: $(Build.SourcesDirectory)/ubuntu
     displayName: 'Build Azure DevOps Ubuntu agent packer image'
     env:
-      VSPHERE_USER: $(vcenter.username)
-      VSPHERE_PASS: $(vcenter.password)
+      VCENTER_USER: $(vcenter.username)
+      VCENTER_PASS: $(vcenter.password)
       ADMIN_PASS: $(packer.admin.password)
