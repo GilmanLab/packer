@@ -20,11 +20,12 @@ jobs:
     name: Lab
   variables:
     - group: packer
+    - group: vcenter
   steps:
   - script: pwsh ./build.ps1 -Type iso -Image ws2016core
     workingDirectory: $(Build.SourcesDirectory)/windows
     displayName: 'Build Windows Server 2016 Core packer image'
     env:
-      VSPHERE_USER: $(vsphere.username)
-      VSPHERE_PASS: $(vsphere.password)
-      ADMIN_PASS: $(admin.password)
+      VCENTER_USER: $(vcenter.username)
+      VCENTER_PASS: $(vcenter.password)
+      ADMIN_PASS: $(packer.admin.password)

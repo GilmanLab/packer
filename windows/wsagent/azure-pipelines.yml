@@ -20,11 +20,12 @@ jobs:
       - agent.os -equals Linux
   variables:
     - group: packer
+    - group: vcenter
   steps:
   - script: pwsh ./build.ps1 -Type clone -Image wsagent
     workingDirectory: $(Build.SourcesDirectory)/windows
     displayName: 'Build Azure DevOps Windows agent'
     env:
-      VSPHERE_USER: $(vsphere.username)
-      VSPHERE_PASS: $(vsphere.password)
-      ADMIN_PASS: $(admin.password)
+      VCENTER_USER: $(vcenter.username)
+      VCENTER_PASS: $(vcenter.password)
+      ADMIN_PASS: $(packer.admin.password)
