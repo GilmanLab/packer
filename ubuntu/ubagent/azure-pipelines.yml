@@ -17,11 +17,12 @@ jobs:
       - agent.os -equals Linux
   variables:
     - group: packer
+    - group: vcenter
   steps:
   - script: pwsh ./build.ps1 -Type clone -Image ubagent
     workingDirectory: $(Build.SourcesDirectory)/ubuntu
     displayName: 'Build Azure DevOps Ubuntu agent packer image'
     env:
-      VSPHERE_USER: $(vsphere.username)
-      VSPHERE_PASS: $(vsphere.password)
-      ADMIN_PASS: $(admin.password)
+      VSPHERE_USER: $(vcenter.username)
+      VSPHERE_PASS: $(vcenter.password)
+      ADMIN_PASS: $(packer.admin.password)
