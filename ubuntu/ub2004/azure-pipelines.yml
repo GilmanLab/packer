@@ -22,6 +22,6 @@ jobs:
     workingDirectory: $(Build.SourcesDirectory)/ubuntu
     displayName: 'Build Ubuntu 20.04 packer image'
     env:
-      VSPHERE_USER: vsphere.username
-      VSPHERE_PASS: vsphere.password
-      ADMIN_PASS: admin.password
+      VSPHERE_USER: $(vsphere.username)
+      VSPHERE_PASS: $(vsphere.password)
+      ADMIN_PASS: $(admin.password)
