@@ -23,3 +23,10 @@ switch ($Type) {
             clone.pkr.hcl
     }
 }
+
+if ($lastExitCode -ne 0) {
+    Write-Host '##vso[task.complete result=Failed;]Failed'
+}
+else {
+    Write-Host '##vso[task.complete result=Succeeded;]Done'
+}
