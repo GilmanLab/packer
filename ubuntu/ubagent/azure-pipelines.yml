@@ -19,13 +19,13 @@ jobs:
   - task: AzureAppConfiguration@3
     inputs:
       azureSubscription: 'Lab Resource Group'
-      ConfigstoreName: 'LabConfig'
+      ConfigstoreName: 'GLabConfig'
       KeyFilter: '*'
       Label: 'vcenter'
   - task: AzureAppConfiguration@3
     inputs:
       azureSubscription: 'Lab Resource Group'
-      ConfigstoreName: 'LabConfig'
+      ConfigstoreName: 'GLabConfig'
       KeyFilter: '*'
       Label: 'packer'
   - script: pwsh ./build.ps1 -Type clone -Image ubagent
