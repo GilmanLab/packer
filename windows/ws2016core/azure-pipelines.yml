@@ -21,6 +21,10 @@ jobs:
   variables:
     - group: packer
   steps:
-  - script: pwsh ./build.ps1 -Type iso -Username administrator@vsphere.local -VspherePassword $(vsphere.password) -AdminPassword $(admin.password) -Image ws2016core
+  - script: pwsh ./build.ps1 -Type iso -Image ws2016core
     workingDirectory: $(Build.SourcesDirectory)/windows
     displayName: 'Build Windows Server 2016 Core packer image'
+    env:
+      VSPHERE_USER: $(vsphere.username)
+      VSPHERE_PASS: $(vsphere.password)
+      ADMIN_PASS: $(admin.password)

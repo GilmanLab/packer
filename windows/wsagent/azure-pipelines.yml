@@ -21,6 +21,10 @@ jobs:
   variables:
     - group: packer
   steps:
-  - script: pwsh ./build.ps1 -Type clone -Username administrator@vsphere.local -VspherePassword $(vsphere.password) -AdminPassword $(admin.password) -Image wsagent
+  - script: pwsh ./build.ps1 -Type clone -Image wsagent
     workingDirectory: $(Build.SourcesDirectory)/windows
     displayName: 'Build Azure DevOps Windows agent'
+    env:
+      VSPHERE_USER: $(vsphere.username)
+      VSPHERE_PASS: $(vsphere.password)
+      ADMIN_PASS: $(admin.password)
