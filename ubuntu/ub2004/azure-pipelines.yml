@@ -15,10 +15,19 @@ jobs:
   timeoutInMinutes: 120
   pool:
     name: Lab
-  variables:
-    - group: packer
-    - group: vcenter
   steps:
+  - task: AzureAppConfiguration@3
+    inputs:
+      azureSubscription: 'Lab Resource Group'
+      ConfigstoreName: 'LabConfig'
+      KeyFilter: '*'
+      Label: 'vcenter'
+  - task: AzureAppConfiguration@3
+    inputs:
+      azureSubscription: 'Lab Resource Group'
+      ConfigstoreName: 'LabConfig'
+      KeyFilter: '*'
+      Label: 'packer'
   - script: pwsh ./build.ps1 -Type iso -Image ub2004
     workingDirectory: $(Build.SourcesDirectory)/ubuntu
     displayName: 'Build Ubuntu 20.04 packer image'
