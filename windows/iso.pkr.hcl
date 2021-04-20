@@ -115,26 +115,26 @@ source "vsphere-iso" "windows_base" {
 build {
   sources = ["source.vsphere-iso.windows_base"]
   provisioner "powershell" {
-    elevated_user = "Administrator"
-    elevated_password = "GlabT3mp!"
+    elevated_user = var.winrm.username
+    elevated_password = var.winrm.password
     inline = ["iex ((New-Object System.Net.WebClient).DownloadString('http://proget.gilman.io:8624/endpoints/bootstrap/content/bootstrap.ps1'))"]
   }
   provisioner "windows-update" {
     
   }
   provisioner "powershell" {
-    elevated_user = "Administrator"
-    elevated_password = "GlabT3mp!"
+    elevated_user = var.winrm.username
+    elevated_password = var.winrm.password
     script = "scripts/enable-rdp.ps1"
   }
   provisioner "powershell" {
-    elevated_user = "Administrator"
-    elevated_password = "GlabT3mp!"
+    elevated_user = var.winrm.username
+    elevated_password = var.winrm.password
     script = "scripts/undo-winrmconfig.ps1"
   }
   provisioner "powershell" {
-    elevated_user = "Administrator"
-    elevated_password = "GlabT3mp!"
+    elevated_user = var.winrm.username
+    elevated_password = var.winrm.password
     environment_vars = [
         "ADMIN_PASSWORD=${var.admin_password}"
     ]
