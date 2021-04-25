@@ -1,0 +1,31 @@
+---
+- name: Amp playbook
+  hosts: all
+  tasks:
+    - name: Set hostname to FQDN for Windows AD compatibility
+      become: yes
+      ansible.builtin.hostname:
+        name: "{{ ansible_hostname }}.{{ ansible_domain }}"
+    - name: Add amp user
+      become: yes
+      ansible.builtin.user:
+        name: amp
+    - name: Add Cubecoders signing key
+      become: yes
+      ansible.builtin.apt_key:
+        url: http://repo.cubecoders.com/archive.key
+        state: present
+    - name: Add Cubecoders repository
+      become: yes
+      ansible.builtin.apt_repository:
+        repo: deb http://repo.cubecoders.com/ debian/
+        state: present
+    - name: Install required packages
+      become: yes
+      ansible.builtin.apt:
+        update_cache: yes
+        name:
+          - lib32gcc1
+          - lib32stdc++6
+          - lib32tinfo5
+          - ampinstmgr

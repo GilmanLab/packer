@@ -16,6 +16,10 @@ variable "ansible_playbook" {
     type = string
 }
 
+variable "ansible_vars" {
+    type = string
+}
+
 variable "vsphere_server" {
     type = object({
         address = string
@@ -94,5 +98,9 @@ build {
   provisioner "ansible" {
       playbook_file = var.ansible_playbook
       user = "administrator"
+      extra_arguments = [
+          "--extra-vars",
+          var.ansible_vars
+          ]
   }
 }
