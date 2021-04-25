@@ -30,10 +30,10 @@ jobs:
       Label: 'packer'
   - task: PowerShell@2
     displayName: 'Build Azure DevOps Ubuntu agent packer image'
-    workingDirectory: $(Build.SourcesDirectory)/ubuntu
     inputs:
       filePath: build.ps1
       arguments: -Type clone -Image ubagent
+      workingDirectory: $(Build.SourcesDirectory)/ubuntu
       pwsh: true
     env:
       VCENTER_USER: $(vcenter.username)
