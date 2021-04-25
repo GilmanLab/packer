@@ -31,7 +31,7 @@ jobs:
   - task: PowerShell@2
     displayName: 'Build Azure DevOps Ubuntu agent packer image'
     inputs:
-      filePath: build.ps1
+      filePath: ubuntu/build.ps1
       arguments: -Type clone -Image ubagent
       workingDirectory: $(Build.SourcesDirectory)/ubuntu
       pwsh: true
