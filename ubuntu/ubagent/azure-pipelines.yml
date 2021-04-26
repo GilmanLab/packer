@@ -4,7 +4,6 @@ trigger:
       - master
   paths:
     include:
-      - ubuntu/build.ps1
       - ubuntu/clone.pkr.hcl
       - ubuntu/ubagent/*
 

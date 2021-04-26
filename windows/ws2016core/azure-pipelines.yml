@@ -4,7 +4,6 @@ trigger:
       - master
   paths:
     include:
-      - windows/build.ps1
       - windows/iso.pkr.hcl
       - windows/ws2016core/*
       - windows/scripts/change-pass.ps1
@@ -12,6 +11,11 @@ trigger:
       - windows/scripts/enable-winrm.ps1
       - windows/scripts/install-vm-tools.ps1
       - windows/scripts/undo-winrmconfig.ps1
+
+variables:
+  os: windows
+  image: ws2016core
+  type: iso
 
 jobs:
 - job: Default
@@ -31,9 +35,13 @@ jobs:
       ConfigstoreName: 'GLabConfig'
       KeyFilter: '*'
       Label: 'packer'
-  - script: pwsh ./build.ps1 -Type iso -Image ws2016core
-    workingDirectory: $(Build.SourcesDirectory)/windows
+  - task: PowerShell@2
     displayName: 'Build Windows Server 2016 Core packer image'
+    inputs:
+      filePath: build.ps1
+      arguments: -Os $(os) -Image $(image) -Type $(type)
+      workingDirectory: $(Build.SourcesDirectory)/windows
+      pwsh: true
     env:
       VCENTER_USER: $(vcenter.username)
       VCENTER_PASS: $(vcenter.password)
