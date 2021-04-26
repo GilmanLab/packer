@@ -4,11 +4,15 @@ trigger:
       - master
   paths:
     include:
-      - ubuntu/build.ps1
       - ubuntu/iso.pkr.hcl
       - ubuntu/ub2004/*
       - ubuntu/scripts/bootstrap.sh
       - ubuntu/scripts/install-ad.sh
+
+variables:
+  os: ubuntu
+  image: ub2004
+  type: iso
 
 jobs:
 - job: Default
@@ -28,9 +32,13 @@ jobs:
       ConfigstoreName: 'GLabConfig'
       KeyFilter: '*'
       Label: 'packer'
-  - script: pwsh ./build.ps1 -Type iso -Image ub2004
-    workingDirectory: $(Build.SourcesDirectory)/ubuntu
+  - task: PowerShell@2
     displayName: 'Build Ubuntu 20.04 packer image'
+    inputs:
+      filePath: build.ps1
+      arguments: -Os $(os) -Image $(image) -Type $(type)
+      workingDirectory: $(Build.SourcesDirectory)/ubuntu
+      pwsh: true
     env:
       VCENTER_USER: $(vcenter.username)
       VCENTER_PASS: $(vcenter.password)

@@ -4,12 +4,16 @@ trigger:
       - master
   paths:
     include:
-      - windows/build.ps1
       - windows/clone.pkr.hcl
       - windows/wsagent/*
       - windows/scripts/change-pass.ps1
       - windows/scripts/enable-winrm.ps1
       - windows/scripts/undo-winrmconfig.ps1
+
+variables:
+  os: windows
+  image: wsagent
+  type: clone
 
 jobs:
 - job: Default
@@ -31,9 +35,13 @@ jobs:
       ConfigstoreName: 'GLabConfig'
       KeyFilter: '*'
       Label: 'packer'
-  - script: pwsh ./build.ps1 -Type clone -Image wsagent
-    workingDirectory: $(Build.SourcesDirectory)/windows
+  - task: PowerShell@2
     displayName: 'Build Azure DevOps Windows agent'
+    inputs:
+      filePath: build.ps1
+      arguments: -Os $(os) -Image $(image) -Type $(type)
+      workingDirectory: $(Build.SourcesDirectory)/windows
+      pwsh: true
     env:
       VCENTER_USER: $(vcenter.username)
       VCENTER_PASS: $(vcenter.password)
