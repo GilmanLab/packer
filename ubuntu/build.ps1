@@ -63,9 +63,12 @@ foreach ($var in $packerVariables.GetEnumerator()) {
 }
 
 # Run Packer
+Write-Host 'Running Packer...'
 $packerArgs.Add($configFile) | Out-Null
-$exitCode = Start-Process $PackerPath -ArgumentList $packerArgs -NoNewWindow -Wait
-if ($exitCode -ne 0) {
+$proc = Start-Process $PackerPath -ArgumentList $packerArgs -NoNewWindow -Wait
+
+Write-Host ('Packer exited with code: {0}' -f $proc.ExitCode)
+if ($proc.ExitCode -ne 0) {
     Write-Host '##vso[task.complete result=Failed;]Failed'
 }
 else {
