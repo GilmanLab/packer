@@ -4,9 +4,13 @@ trigger:
       - master
   paths:
     include:
-      - ubuntu/build.ps1
       - ubuntu/clone.pkr.hcl
       - ubuntu/ubagent/*
+
+variables:
+  os: ubuntu
+  image: ubagent
+  type: clone
 
 jobs:
 - job: Default
@@ -28,9 +32,13 @@ jobs:
       ConfigstoreName: 'GLabConfig'
       KeyFilter: '*'
       Label: 'packer'
-  - script: pwsh ./build.ps1 -Type clone -Image ubagent
-    workingDirectory: $(Build.SourcesDirectory)/ubuntu
+  - task: PowerShell@2
     displayName: 'Build Azure DevOps Ubuntu agent packer image'
+    inputs:
+      filePath: build.ps1
+      arguments: -Os $(os) -Image $(image) -Type $(type)
+      workingDirectory: $(Build.SourcesDirectory)/ubuntu
+      pwsh: true
     env:
       VCENTER_USER: $(vcenter.username)
       VCENTER_PASS: $(vcenter.password)
