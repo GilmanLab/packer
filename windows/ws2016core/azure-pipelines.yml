@@ -16,7 +16,7 @@ variables:
   os: windows
   image: ws2016core
   type: iso
-  packer.vars: @{chocolatey_repo='$(proget.feeds.chocolatey)';powershell_repo='$(proget.feeds.powershell)'}
+  packer.vars: "@{chocolatey_repo='$(proget.feeds.chocolatey)';powershell_repo='$(proget.feeds.powershell)'}"
 
 jobs:
 - job: Default
