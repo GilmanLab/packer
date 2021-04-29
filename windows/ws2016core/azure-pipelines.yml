@@ -45,7 +45,7 @@ jobs:
     displayName: 'Build Windows Server 2016 Core packer image'
     inputs:
       filePath: build.ps1
-      arguments: "-Os $(os) -Image $(image) -Type $(type) -Variables @{chocolatey_repo='$(proget.feeds.chocolatey)';powershell_repo='$(proget.feeds.powershell)'"
+      arguments: -Os $(os) -Image $(image) -Type $(type) -Variables @{chocolatey_repo='$(proget.feeds.chocolatey)';powershell_repo='$(proget.feeds.powershell)'}
       workingDirectory: $(Build.SourcesDirectory)/windows
       pwsh: true
     env:
