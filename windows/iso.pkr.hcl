@@ -1,3 +1,11 @@
+variable "chocolatey_repo" {
+    type = string
+}
+
+variable "powershell_repo" {
+    type = string
+}
+
 variable "vsphere_username" {
     type = string
 }
@@ -117,7 +125,11 @@ build {
   provisioner "powershell" {
     elevated_user = var.winrm.username
     elevated_password = var.winrm.password
-    inline = ["iex ((New-Object System.Net.WebClient).DownloadString('http://proget.gilman.io:8624/endpoints/bootstrap/content/bootstrap.ps1'))"]
+    script = "scripts/bootstrap.ps1"
+    environment_vars = [
+        "CHOCOLATEY_REPO=${var.chocolatey_repo}",
+        "POWERSHELL_REPO=${var.powershell_repo}"
+    ]
   }
   provisioner "windows-update" {
     
