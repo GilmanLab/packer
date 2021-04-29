@@ -41,7 +41,7 @@ choco source add -n 'internal-chocolatey' -s $env:CHOCOLATEY_REPO
 
 # Install Powershell Core
 Write-Host 'Installing Powershell Core...'
-Start-Process 'choco' -ArgumentList @('install', 'powershell-core', '-y') -NoNewWindow -Wait
+Start-Process 'choco' -ArgumentList @('install', 'powershell-core', '-y') -NoNewWindow -Wait -RedirectStandardOutput '.\NUL'
 $env:Path = [System.Environment]::GetEnvironmentVariable('Path', 'Machine') + ';' + [System.Environment]::GetEnvironmentVariable('Path', 'User')
 
 # Add Powershell repository
