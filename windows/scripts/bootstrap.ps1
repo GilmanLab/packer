@@ -7,7 +7,7 @@ Function Install-ChocolateyPackage {
     Write-Host ('Searching for latest version of package {0}...' -f $PackageName)
     $searchPath = '/Packages()?$filter=(Id%20eq%20%27{0}%27)%20and%20IsLatestVersion' -f $PackageName
     $searchUrl = $Repository.Trim('/') + $searchPath
-    [xml] $resp = Invoke-WebRequest $searchUrl
+    [xml] $resp = Invoke-WebRequest $searchUrl -UseBasicParsing
     $packageUrl = $resp.feed.entry.content.src
 
     Write-Host 'Creating temporary directory...'
