@@ -1,5 +1,3 @@
-ansible_playbook = "ws2016gui/playbook.yml"
-
 vsphere_server = {
     address = "vcenter.gilman.io"
     insecure = true
@@ -12,10 +10,10 @@ vsphere_vcenter = {
 }
 
 vsphere_vm = {
-    name = "WS2016GUI"
+    name = "WD10"
     cpus = 4
     memory = 8192
-    os = "windows9Server64Guest"
+    os = "windows9_64Guest"
     firmware = "efi"
     disks = [
         {
@@ -37,14 +35,13 @@ vsphere_media = {
         wait = "-1s"
     }
     iso_paths = [
-        "[Lab] iso/en_windows_server_2016_updated_feb_2018_x64_dvd_11636692.iso",
+        "[Lab] iso/en_windows_10_consumer_editions_version_20h2_updated_march_2021_x64_dvd_68a3fcec.iso",
         "[] /vmimages/tools-isoimages/windows.iso"
     ]
     floppy_files = [
-        "ws2016gui/autounattend.xml",
-        "scripts/bootstrap.ps1",
-        "scripts/enable-winrm.ps1",
-        "scripts/install-vm-tools.ps1"
+        "wd10/autounattend.xml",
+        "scripts/install-vm-tools.ps1",
+        "scripts/enable-winrm-wd10.ps1"
     ]
 }
 

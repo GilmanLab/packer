@@ -12,6 +12,10 @@ variable "admin_password" {
     sensitive = true
 }
 
+variable "ansible_playbook" {
+    type = string
+}
+
 variable "vsphere_server" {
     type = object({
         address = string
@@ -114,27 +118,28 @@ source "vsphere-iso" "windows_base" {
 
 build {
   sources = ["source.vsphere-iso.windows_base"]
-  provisioner "powershell" {
-    elevated_user = "Administrator"
-    elevated_password = "GlabT3mp!"
-    inline = ["iex ((New-Object System.Net.WebClient).DownloadString('http://proget.gilman.io:8624/endpoints/bootstrap/content/bootstrap.ps1'))"]
+
+  provisioner "ansible" {
+      playbook_file = var.ansible_playbook
+      user = "Administrator"
+      use_proxy = false
   }
   provisioner "windows-update" {
     
   }
   provisioner "powershell" {
-    elevated_user = "Administrator"
-    elevated_password = "GlabT3mp!"
+    elevated_user = var.winrm.username
+    elevated_password = var.winrm.password
     script = "scripts/enable-rdp.ps1"
   }
   provisioner "powershell" {
-    elevated_user = "Administrator"
-    elevated_password = "GlabT3mp!"
+    elevated_user = var.winrm.username
+    elevated_password = var.winrm.password
     script = "scripts/undo-winrmconfig.ps1"
   }
   provisioner "powershell" {
-    elevated_user = "Administrator"
-    elevated_password = "GlabT3mp!"
+    elevated_user = var.winrm.username
+    elevated_password = var.winrm.password
     environment_vars = [
         "ADMIN_PASSWORD=${var.admin_password}"
     ]

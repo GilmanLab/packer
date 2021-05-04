@@ -1,0 +1,10 @@
+---
+- name: Agent playbook
+  hosts: all
+  tasks:
+    - name: Install required packages
+      chocolatey.chocolatey.win_chocolatey:
+        name: 
+          - dotnet-472
+          - vcredist
+        state: present

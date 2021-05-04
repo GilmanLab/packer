@@ -6,6 +6,7 @@ trigger:
     include:
       - windows/iso.pkr.hcl
       - windows/ws2016gui/*
+      - windows/scripts/bootstrap.ps1
       - windows/scripts/change-pass.ps1
       - windows/scripts/enable-rdp.ps1
       - windows/scripts/enable-winrm.ps1
@@ -16,12 +17,15 @@ variables:
   os: windows
   image: ws2016gui
   type: iso
+  packer.vars: "@{}"
 
 jobs:
 - job: Default
   timeoutInMinutes: 120
   pool:
     name: Lab
+    demands:
+      - agent.os -equals Linux
   steps:
   - task: AzureAppConfiguration@3
     inputs:
@@ -35,11 +39,17 @@ jobs:
       ConfigstoreName: 'GLabConfig'
       KeyFilter: '*'
       Label: 'packer'
+  - task: AzureAppConfiguration@3
+    inputs:
+      azureSubscription: 'Lab Resource Group'
+      ConfigstoreName: 'GLabConfig'
+      KeyFilter: '*'
+      Label: 'proget'
   - task: PowerShell@2
     displayName: 'Build Windows Server 2016 GUI packer image'
     inputs:
       filePath: build.ps1
-      arguments: -Os $(os) -Image $(image) -Type $(type)
+      arguments: -Os $(os) -Image $(image) -Type $(type) -Variables $(packer.vars)
       workingDirectory: $(Build.SourcesDirectory)/windows
       pwsh: true
     env:

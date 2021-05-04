@@ -4,19 +4,13 @@ trigger:
       - master
   paths:
     include:
-      - windows/iso.pkr.hcl
-      - windows/ws2016core/*
-      - windows/scripts/change-pass.ps1
-      - windows/scripts/enable-rdp.ps1
-      - windows/scripts/enable-winrm.ps1
-      - windows/scripts/install-vm-tools.ps1
-      - windows/scripts/undo-winrmconfig.ps1
+      - ubuntu/clone.pkr.hcl
+      - ubuntu/ubagent/*
 
 variables:
-  os: windows
-  image: ws2016core
-  type: iso
-  packer.vars: "@{}"
+  os: ubuntu
+  image: amp
+  type: clone
 
 jobs:
 - job: Default
@@ -43,15 +37,18 @@ jobs:
       azureSubscription: 'Lab Resource Group'
       ConfigstoreName: 'GLabConfig'
       KeyFilter: '*'
-      Label: 'proget'
+      Label: 'amp'
   - task: PowerShell@2
-    displayName: 'Build Windows Server 2016 Core packer image'
+    displayName: 'Build Azure DevOps Ubuntu agent packer image'
     inputs:
       filePath: build.ps1
-      arguments: -Os $(os) -Image $(image) -Type $(type) -Variables $(packer.vars)
-      workingDirectory: $(Build.SourcesDirectory)/windows
+      arguments: -Os $(os) -Image $(image) -Type $(type)
+      workingDirectory: $(Build.SourcesDirectory)/ubuntu
       pwsh: true
     env:
       VCENTER_USER: $(vcenter.username)
       VCENTER_PASS: $(vcenter.password)
       ADMIN_PASS: $(packer.admin.password)
+      AMP_USERNAME: $(amp.admin.username)
+      AMP_PASSWORD: $(amp.admin.password)
+      
