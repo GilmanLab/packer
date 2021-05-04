@@ -1,11 +1,3 @@
-variable "chocolatey_repo" {
-    type = string
-}
-
-variable "powershell_repo" {
-    type = string
-}
-
 variable "vsphere_username" {
     type = string
 }
@@ -18,6 +10,10 @@ variable "vsphere_password" {
 variable "admin_password" {
     type = string
     sensitive = true
+}
+
+variable "ansible_playbook" {
+    type = string
 }
 
 variable "vsphere_server" {
@@ -122,14 +118,11 @@ source "vsphere-iso" "windows_base" {
 
 build {
   sources = ["source.vsphere-iso.windows_base"]
-  provisioner "powershell" {
-    elevated_user = var.winrm.username
-    elevated_password = var.winrm.password
-    script = "scripts/bootstrap.ps1"
-    environment_vars = [
-        "CHOCOLATEY_REPO=${var.chocolatey_repo}",
-        "POWERSHELL_REPO=${var.powershell_repo}"
-    ]
+
+  provisioner "ansible" {
+      playbook_file = var.ansible_playbook
+      user = "Administrator"
+      use_proxy = false
   }
   provisioner "windows-update" {
     

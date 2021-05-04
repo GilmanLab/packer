@@ -30,14 +30,17 @@ Function Install-ChocolateyPackage {
     Remove-Item $tempFolder -Recurse -Force
 }
 
+$CHOCOLATEY_REPO = 'http://proget.gilman.io:8624/nuget/internal-chocolatey/'
+$POWERSHELL_REPO = 'http://proget.gilman.io:8624/nuget/internal-powershell/'
+
 # Install Chocolatey
 Write-Host 'Installing Chocolatey...'
-Install-ChocolateyPackage -Repository $env:CHOCOLATEY_REPO -PackageName 'chocolatey'
+Install-ChocolateyPackage -Repository $CHOCOLATEY_REPO -PackageName 'chocolatey'
 $env:Path = [System.Environment]::GetEnvironmentVariable('Path', 'Machine') + ';' + [System.Environment]::GetEnvironmentVariable('Path', 'User')
 
 # Add Chocolatey repository
 choco source remove -n 'chocolatey'
-choco source add -n 'internal-chocolatey' -s $env:CHOCOLATEY_REPO
+choco source add -n 'internal-chocolatey' -s $CHOCOLATEY_REPO
 
 # Install Powershell Core
 Write-Host 'Installing Powershell Core...'
@@ -45,4 +48,4 @@ Start-Process 'choco' -ArgumentList @('install', 'powershell-core', '-y', '--no-
 $env:Path = [System.Environment]::GetEnvironmentVariable('Path', 'Machine') + ';' + [System.Environment]::GetEnvironmentVariable('Path', 'User')
 
 # Add Powershell repository
-Register-PSRepository -Name 'internal-powershell' -SourceLocation $env:POWERSHELL_REPO -PublishLocation $env:POWERSHELL_REPO -InstallationPolicy Trusted 
+Register-PSRepository -Name 'internal-powershell' -SourceLocation $POWERSHELL_REPO -PublishLocation $POWERSHELL_REPO -InstallationPolicy Trusted 

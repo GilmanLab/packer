@@ -1,3 +1,5 @@
+ansible_playbook = "ws2016gui/playbook.yml"
+
 vsphere_server = {
     address = "vcenter.gilman.io"
     insecure = true
@@ -40,8 +42,9 @@ vsphere_media = {
     ]
     floppy_files = [
         "ws2016gui/autounattend.xml",
-        "scripts/install-vm-tools.ps1",
-        "scripts/enable-winrm.ps1"
+        "scripts/bootstrap.ps1",
+        "scripts/enable-winrm.ps1",
+        "scripts/install-vm-tools.ps1"
     ]
 }
 
