@@ -41,7 +41,7 @@ vsphere_media = {
         "[] /vmimages/tools-isoimages/windows.iso"
     ]
     floppy_files = [
-        "ws2016gui/autounattend.xml",
+        "ws2016core/autounattend.xml",
         "scripts/bootstrap.ps1",
         "scripts/enable-winrm.ps1",
         "scripts/install-vm-tools.ps1"
